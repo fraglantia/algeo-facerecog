@@ -1,4 +1,4 @@
-from cv2 import cv2
+import cv2
 import numpy as np
 import scipy
 from scipy.misc import imread
@@ -6,6 +6,7 @@ import pickle
 import random
 import os
 import matplotlib.pyplot as plt
+
 
 # Feature extractor
 def extract_features(image_path, vector_size=32):
@@ -48,17 +49,18 @@ def batch_extractor(images_path, pickled_db_path="features.pck"):
         result[name] = extract_features(f)
     
     # saving all our feature vectors in pickled file
-    with open(pickled_db_path, 'w') as fp:
+    with open(pickled_db_path, 'wb') as fp:
         pickle.dump(result, fp)
+
 
 class Matcher(object):
 
     def __init__(self, pickled_db_path="features.pck"):
-        with open(pickled_db_path) as fp:
+        with open(pickled_db_path, "rb") as fp:
             self.data = pickle.load(fp)
         self.names = []
         self.matrix = []
-        for k, v in self.data.iteritems():
+        for k, v in self.data.items():
             self.names.append(k)
             self.matrix.append(v)
         self.matrix = np.array(self.matrix)
@@ -97,7 +99,7 @@ def run():
         print('Query image ==========================================')
         show_img(s)
         names, match = ma.match(s, topn=3)
-        print ('Result images ========================================')
+        print('Result images ========================================')
         for i in range(3):
             # we got cosine distance, less cosine distance between vectors
             # more they similar, thus we subtruct it from 1 to get match value
