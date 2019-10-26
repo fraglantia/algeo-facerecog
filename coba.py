@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 
 
 # Feature extractor
-def extract_features(image_path, vector_size=32):
-    image = imread(image_path, mode="RGB")
+def extract_features(image_path, vector_size=24):
+    image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    image = image[0:300, 0:300]
     try:
         # Using KAZE, cause SIFT, ORB and other was moved to additional module
         # which is adding addtional pain during install
@@ -40,11 +41,18 @@ def extract_features(image_path, vector_size=32):
 
 
 def batch_extractor(images_path, pickled_db_path="features.pck"):
-    files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
+    files = []
+
+    folders = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
+    for subfolder in folders:
+        files += [os.path.join(subfolder, p) for p in sorted(os.listdir(subfolder))]
 
     result = {}
+    i = 1
     for f in files:
-        print('Extracting features from image %s' % f)
+        # print('Extracting features from image %s' % f)
+        print(str(100*i/len(files))[:5]+'%')
+        i += 1
         name = f.split('/')[-1].lower()
         result[name] = extract_features(f)
     
@@ -69,11 +77,35 @@ class Matcher(object):
     def cos_cdist(self, vector):
         # getting cosine distance between search image and images database
         v = vector.reshape(1, -1)
-        return scipy.spatial.distance.cdist(self.matrix, v, 'cosine').reshape(-1)
+        # print(self.matrix)
+
+        cos_distances = np.array([])
+
+        for vec in self.matrix:
+            # print(len(vec))
+            cosdis = np.dot(v, vec) / (np.linalg.norm(vec) * np.linalg.norm(vec))
+            cos_distances = np.append(cos_distances, (1-cosdis))
+
+        return cos_distances
+
+    def euc_dist(self, vector):
+        # getting cosine distance between search image and images database
+        v = vector.reshape(1, -1)
+        # print(self.matrix)
+
+        euc_distances = np.array([])
+
+        for vec in self.matrix:
+            # print(len(vec))
+            edis = np.linalg.norm(v-vec)
+            euc_distances = np.append(euc_distances, (edis))
+            
+        return euc_distances
 
     def match(self, image_path, topn=5):
         features = extract_features(image_path)
         img_distances = self.cos_cdist(features)
+        img_distances = self.euc_dist(features)
         # getting top 5 records
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
         nearest_img_paths = self.names[nearest_ids].tolist()
@@ -81,29 +113,52 @@ class Matcher(object):
         return nearest_img_paths, img_distances[nearest_ids].tolist()
 
 def show_img(path):
-    img = imread(path, mode="RGB")
-    plt.imshow(img)
-    plt.show()
-    
+    img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
+    img = img[0:300, 0:300]
+    cv2.imshow(path,img)
+    cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+    # plt.imshow(img)
+    # plt.show()
+
+def pic_name(path):
+    return path.split('\\')[0].split('/')[-1][5:]
+
 def run():
-    images_path = 'resources/images/'
-    files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
+    images_path = 'resources/PINS/'
+
+    files = []
+
+    folders = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
+    for subfolder in folders:
+        files += [os.path.join(subfolder, p) for p in sorted(os.listdir(subfolder))]
+    # files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
     # getting 3 random images 
-    sample = random.sample(files, 3)
+    sample = random.sample(files, 1)
+    # sample = ['resources/saya.jpg'];
     
     batch_extractor(images_path)
 
+    # print(sample)
+    
     ma = Matcher('features.pck')
     
     for s in sample:
-        print('Query image ==========================================')
+        print()
+        # print('Query image ==========================================')
         show_img(s)
-        names, match = ma.match(s, topn=3)
-        print('Result images ========================================')
-        for i in range(3):
+        names, match = ma.match(s, topn=2)
+        print(pic_name(s).lower())
+        # print('Result images ========================================')
+        for i in range(1,2):
             # we got cosine distance, less cosine distance between vectors
             # more they similar, thus we subtruct it from 1 to get match value
+            # print(i)
+            # if(os.path.join(images_path, names[i]) == 'resources/images/saya2.jpg'):
             print('Match %s' % (1-match[i]))
+            print(pic_name(os.path.join(images_path, names[i])).lower())
             show_img(os.path.join(images_path, names[i]))
+                # break;    
 
+    
 run()
