@@ -1,7 +1,10 @@
 import cv2
 import numpy as np
 import scipy
-from scipy.misc import imread
+from matplotlib.pyplot import imread
+# from scipy.misc import imread
+from tkinter import *
+from PIL import ImageTk, Image
 import pickle
 import random
 import os
@@ -107,6 +110,49 @@ def pic_name(path):
     return path.split('\\')[0].split('/')[-1][5:]
 
 def run():
+
+    # ditambahin di run dulu ya gui nya --fu
+    # untuk opening 'aplikasi' ala2 microsoft word
+    m_open = Tk()
+    m_open.overrideredirect(1) #menghapus frame windows
+    m_open.geometry('350x350+350+200')
+    logo_path = 'C:/Users/ASUS/Desktop/Sem 3/Algeo/algeo-facerecog/title_logo.png' #path diseuaikan
+    img = PhotoImage(file=logo_path)
+    panel = Label(m_open, image = img)
+    panel.pack()
+    
+    open_text = "M U K A K U K A M U"
+    m_open.message = Message(m_open, text=open_text, font=("Montserrat",20), width=350)
+    m_open.message.pack()
+    
+    m_open.after(1500, m_open.destroy) #tampil sebentar
+    m_open.mainloop()
+
+
+    # untuk menu utama : random atau pilih foto
+    m_menu = Tk()
+    m_menu.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
+    m_menu.wm_iconbitmap('icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
+    m_menu.geometry('350x350+350+200')
+    m_menu.resizable(0,0)
+    m_menu.overrideredirect(1)
+
+    main_msg = "\nSelidikilah kemiripan mukamu di MUKAKUKAMU!\nYou can pick your photo OR we can choose it for you!\n" 
+    m_message = Message(m_menu, text=main_msg, font=("Montserrat",12))
+    m_message.pack()
+        
+    random1 = Button(m_menu, command=m_menu.destroy) 
+    img1 = PhotoImage(file = "C:/Users/ASUS/Desktop/Sem 3/Algeo/algeo-facerecog/opt1.png") #file path disesuaikan
+    random1.config(image=img1)
+    random1.pack()
+        
+    random2 = Button(m_menu, command=m_menu.destroy )
+    img2 = PhotoImage(file = "C:/Users/ASUS/Desktop/Sem 3/Algeo/algeo-facerecog/opt2.png") #file path disesuaikan
+    random2.config(image=img2)
+    random2.pack()
+
+    m_menu.mainloop()
+
     images_path = 'resources/PINS/'
 
     files = []
