@@ -21,7 +21,7 @@ open_text = "M U K A K U K A M U"
 m_open.message = Message(m_open, text=open_text, font=("Montserrat",20), width=350)
 m_open.message.pack()
 
-m_open.after(500, m_open.destroy) #tampil sebentar
+m_open.after(1500, m_open.destroy) #tampil sebentar
 db = load_database() #load db data
 m_open.mainloop()
 
@@ -31,7 +31,7 @@ m_menu.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus
 m_menu.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
 m_menu.geometry('350x350+350+200')
 m_menu.resizable(0,0)
-m_menu.overrideredirect(1)
+# m_menu.overrideredirect(1)
 
 main_msg = "\nSelidikilah kemiripan mukamu di MUKAKUKAMU!\nYou can pick your photo OR we can choose it for you!\n" 
 m_message = Message(m_menu, text=main_msg, font=("Montserrat",10))
