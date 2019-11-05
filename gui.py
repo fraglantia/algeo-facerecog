@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 import random
 import os
 import cv2
-# import coba
+from coba import *
 
 # ditambahin di run dulu ya gui nya --fu
 # untuk opening 'aplikasi' ala2 microsoft word
@@ -22,6 +22,7 @@ m_open.message = Message(m_open, text=open_text, font=("Montserrat",20), width=3
 m_open.message.pack()
 
 m_open.after(500, m_open.destroy) #tampil sebentar
+db = load_database() #load db data
 m_open.mainloop()
 
 # untuk menu utama : random atau pilih foto
@@ -77,8 +78,31 @@ random2.pack()
 
 m_menu.mainloop()
 
-print(v.get())
-print(fn)
+# print(v.get())
+# print(fn)
+
+matches = matching(fn, db, top=20, cosine=(v.get()==2))
+counter = 0
+
+def changeimg(matches, pos=True):
+    global counter
+    bt1.configure(state=NORMAL)
+    bt2.configure(state=NORMAL)
+    if pos:
+        counter += 1
+    else:
+        counter -= 1
+
+    # maxnya ganti ntar
+    if counter == 10:
+        bt1.configure(state=DISABLED)
+    if counter == 0:
+        bt2.configure(state=DISABLED)
+
+    img2 = ImageTk.PhotoImage(Image.open('resources/PINS/'+matches[counter][0]))
+    canvas2.itemconfig(imgArea2, image=img2)
+    canvas2.image = img2
+
 
 m_img = Tk()
 m_img.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
@@ -93,11 +117,13 @@ imgArea2 = canvas1.create_image(20,20, anchor=NW, image=img1)
 
 canvas2 = Canvas(m_img, width = 300, height = 300)
 canvas2.pack(side=LEFT)
-img2 = ImageTk.PhotoImage(Image.open(chooserandom()))
+img2 = ImageTk.PhotoImage(Image.open('resources/PINS/'+matches[counter][0]))
 imgArea2 = canvas2.create_image(20,20, anchor=NW, image=img2)      
 
-bt = Button(m_img, text=">>")
-bt.pack(side=BOTTOM)
+bt1 = Button(m_img, text=">>", command=lambda:changeimg(matches, pos=True), state=NORMAL)
+bt1.pack(side=BOTTOM)
+bt2 = Button(m_img, text="<<", command=lambda:changeimg(matches, pos=False), state=DISABLED)
+bt2.pack(side=BOTTOM)
 
 m_img.mainloop()
 
