@@ -115,7 +115,7 @@ def run():
     m_open = Tk()
     m_open.overrideredirect(1) #menghapus frame windows
     m_open.geometry('350x350+350+200')
-    logo_path = 'C:/Users/ASUS/Desktop/Sem 3/Algeo/algeo-facerecog/title_logo.png' #path diseuaikan
+    logo_path = './guiresources/title_logo.png' #path diseuaikan
     img = PhotoImage(file=logo_path)
     panel = Label(m_open, image = img)
     panel.pack()
@@ -131,7 +131,7 @@ def run():
     # untuk menu utama : random atau pilih foto
     m_menu = Tk()
     m_menu.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
-    m_menu.wm_iconbitmap('icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
+    m_menu.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
     m_menu.geometry('350x350+350+200')
     m_menu.resizable(0,0)
     m_menu.overrideredirect(1)
@@ -141,12 +141,12 @@ def run():
     m_message.pack()
         
     random1 = Button(m_menu, command=m_menu.destroy) 
-    img1 = PhotoImage(file = "C:/Users/ASUS/Desktop/Sem 3/Algeo/algeo-facerecog/opt1.png") #file path disesuaikan
+    img1 = PhotoImage(file = "./guiresources/opt1.png") #file path disesuaikan
     random1.config(image=img1)
     random1.pack()
         
     random2 = Button(m_menu, command=m_menu.destroy )
-    img2 = PhotoImage(file = "C:/Users/ASUS/Desktop/Sem 3/Algeo/algeo-facerecog/opt2.png") #file path disesuaikan
+    img2 = PhotoImage(file = "./guiresources/opt2.png") #file path disesuaikan
     random2.config(image=img2)
     random2.pack()
 
@@ -155,7 +155,7 @@ def run():
     # menu ecluidean dan cosine
     m_method = Tk()
     m_method.title('M U K A K U K A M U')
-    m_method.wm_iconbitmap('icon.ico')
+    m_method.wm_iconbitmap('./guiresources/icon.ico')
     m_method.geometry('350x350+500+200')
 
     msg_method = "\nPilih metode yang Anda inginkan\n"
@@ -163,12 +163,12 @@ def run():
     m_method.message.pack()
 
     euc_button = Button(m_method, command=m_method.destroy)
-    img3 = PhotoImage(file="C:/Users/Hengky/Downloads/algeo/algeo-facerecog/euc.png")
+    img3 = PhotoImage(file="./guiresources//euc.png")
     euc_button.config(image=img3)
     euc_button.pack()
 
     cos_button = Button(m_method, command=m_method.destroy)
-    img4 = PhotoImage(file="C:/Users/Hengky/Downloads/algeo/algeo-facerecog/cos.png")
+    img4 = PhotoImage(file="./guiresources//cos.png")
     cos_button.config(image=img4)
     cos_button.pack()
 
