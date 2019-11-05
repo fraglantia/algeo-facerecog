@@ -152,6 +152,28 @@ def run():
 
     m_menu.mainloop()
 
+    # menu ecluidean dan cosine
+    m_method = Tk()
+    m_method.title('M U K A K U K A M U')
+    m_method.wm_iconbitmap('icon.ico')
+    m_method.geometry('350x350+350+200')
+
+    msg_method = "\nP I L I H\nM E T O D E\nyang Anda inginkan\n"
+    m_method.message = Message(m_method, text=msg_method,font=("Montserrat",12))
+    m_method.message.pack()
+
+    euc_button = Button(m_method, command=m_method.destroy)
+    img3 = PhotoImage(file="C:/Users/Hengky/Downloads/algeo/algeo-facerecog/euc.png")
+    euc_button.config(image=img3)
+    euc_button.pack()
+
+    cos_button = Button(m_method, command=m_method.destroy)
+    img4 = PhotoImage(file="C:/Users/Hengky/Downloads/algeo/algeo-facerecog/cos.png")
+    cos_button.config(image=img4)
+    cos_button.pack()
+
+    m_method.mainloop()
+
     images_path = 'resources/PINS/'
 
     files = []
