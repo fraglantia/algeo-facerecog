@@ -11,7 +11,6 @@ import os
 import matplotlib.pyplot as plt
 
 
-# Feature extractor
 def extract_features(image_path, vector_size=24):
     image = cv2.imread(image_path, cv2.IMREAD_COLOR)
     # crop img 300x300
@@ -23,12 +22,10 @@ def extract_features(image_path, vector_size=24):
     keypoints = sorted(keypoints, key=lambda x: -x.response)[:vector_size]
     keypoints, dsc = alg.compute(image, keypoints)
     dsc = dsc.flatten()
-    # Making descriptor of same size
-    # Descriptor vector size is 64
+
     needed_size = (vector_size * 64)
     if dsc.size < needed_size:
-        # if we have less the 32 descriptors then just adding zeros at the
-        # end of our feature vector
+        # if vectornya kurang besar (keypoints detectednya sedikit, fill w/ 0's)
         dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
 
     return dsc
@@ -87,7 +84,6 @@ def eucdist(v1, v2):
 def load_database(pickled_db_path="features.pck"):
     with open(pickled_db_path, "rb") as fp:
         data = pickle.load(fp)
-
     # return a dictionary
     return data.items()
 
@@ -109,33 +105,6 @@ def matching(imgpath, db, cosine=True, top=5):
 def pic_name(path):
     return path.split('\\')[0].split('/')[-1][5:]
 
-# def run():
 
-#     images_path = 'resources/PINS/'
-
-#     files = []
-
-#     folders = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
-#     for subfolder in folders:
-#         files += [os.path.join(subfolder, p) for p in sorted(os.listdir(subfolder))]
-#     # files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
-#     # getting 3 random images 
-#     sample = random.sample(files, 1)
-#     # sample = ['resources/saya.jpg'];
-#     # batch_extractor(images_path)
-#     # print(sample)
-    
-#     db = load_database()
-    
-#     for s in sample:
-#         print()
-#         # print('Query image ==========================================')
-#         show_img(s)
-#         # names, match = ma.match(s, topn=2)
-#         matches = matching(s, db, top=2, cosine=True)
-#         print(pic_name(s).lower())
-#         # print('Result images ========================================')
-#         for i in range(1,2):
-#             print('Match %s' % (matches[i][1]))
-#             print(pic_name(os.path.join(images_path, matches[i][0])).lower())
-#             show_img(os.path.join(images_path, matches[i][0]))
+# UNCOMMENT kalo mau buat db baru
+# batch_extractor('resources/REF/')

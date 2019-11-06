@@ -10,7 +10,6 @@ from matcher import *
 def open():
     global m_open
     global m_menu
-    # ditambahin di run dulu ya gui nya --fu
     # untuk opening 'aplikasi' ala2 microsoft word
     m_open = Tk()
     m_open.overrideredirect(1) #menghapus frame windows
@@ -63,8 +62,8 @@ def menu():
 
     # untuk menu utama : random atau pilih foto
     m_menu = Tk()
-    m_menu.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
-    m_menu.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
+    m_menu.title('M U K A K U K A M U')
+    m_menu.wm_iconbitmap('./guiresources/icon.ico')
     m_menu.geometry('350x350+500+200')
     m_menu.resizable(0,0)
     # m_menu.overrideredirect(1)
