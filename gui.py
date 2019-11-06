@@ -21,7 +21,7 @@ open_text = "M U K A K U K A M U"
 m_open.message = Message(m_open, text=open_text, font=("Montserrat",20), width=350)
 m_open.message.pack()
 
-m_open.after(1500, m_open.destroy) #tampil sebentar
+m_open.after(500, m_open.destroy) #tampil sebentar
 db = load_database() #load db data
 m_open.mainloop()
 
@@ -33,17 +33,19 @@ m_menu.geometry('350x350+350+200')
 m_menu.resizable(0,0)
 # m_menu.overrideredirect(1)
 
-main_msg = "\nSelidikilah kemiripan mukamu di MUKAKUKAMU!\nYou can pick your photo OR we can choose it for you!\n" 
+main_msg = "\nMatch your photos in Mukakukamu\nYou can pick your photo OR we can choose it for you!\n" 
 m_message = Message(m_menu, text=main_msg, font=("Montserrat",10))
 m_message.pack()
 
+threshold = 0
 v = IntVar()
 v.set(1)
 fn = ''
 
-Label(m_menu, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, font=("Montserrat",10)).pack()
-Radiobutton(m_menu, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",8)).pack(anchor=W)
-Radiobutton(m_menu, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",8)).pack(anchor=W)
+def get_t_value():
+    #get threshold value from spinbox
+    global threshold
+    threshold = int(t_value.get()) 
 
 def choose_img_option(choose=True):
     global fn
@@ -66,12 +68,14 @@ def chooseimg():
     fn = filedialog.askopenfilename(initialdir = "./resources",title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
     return fn
 
-random1 = Button(m_menu, command=lambda:choose_img_option(True)) 
+#choose image
+random1 = Button(m_menu, command=lambda:choose_img_option(True), border=0) 
 img1 = PhotoImage(file = "./guiresources/opt1.png") #file path disesuaikan
 random1.config(image=img1)
 random1.pack()
 
-random2 = Button(m_menu, command=lambda:choose_img_option(False))
+#randomize
+random2 = Button(m_menu, command=lambda:choose_img_option(False), border=0)
 img2 = PhotoImage(file = "./guiresources/opt2.png") #file path disesuaikan
 random2.config(image=img2)
 random2.pack()
@@ -80,6 +84,27 @@ m_menu.mainloop()
 
 # print(v.get())
 # print(fn)
+m_method = Tk()
+m_method.geometry('350x350+350+200')
+Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, font=("Montserrat",10)).pack()
+Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",8)).pack(anchor=W)
+Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",8)).pack(anchor=W)
+m_method.wm_iconbitmap('./guiresources/icon.ico')
+m_method.resizable(0,0)
+
+def_thres = StringVar(m_method)
+def_thres.set('10')
+
+Label(m_method, text="""Tentukan nilai threshold yang Anda inginkan:""",justify = LEFT, padx = 20, font=("Montserrat",10)).pack()
+t_value = Spinbox(m_method, from_=1 ,to=20,textvariable=def_thres)
+t_value.pack()
+
+ok = Button(m_method, font=('Montserrat',12), command=lambda:[get_t_value() ,m_method.destroy()], border=0)
+img3 = PhotoImage(file='./guiresources/ok.png')
+ok.config(image=img3)
+ok.pack(anchor=CENTER)
+
+m_method.mainloop()
 
 matches = matching(fn, db, top=20, cosine=(v.get()==2))
 counter = 0
@@ -126,26 +151,3 @@ bt2 = Button(m_img, text="<<", command=lambda:changeimg(matches, pos=False), sta
 bt2.pack(side=BOTTOM)
 
 m_img.mainloop()
-
-
-# menu ecluidean dan cosine
-# m_method = Tk()
-# m_method.title('M U K A K U K A M U')
-# m_method.wm_iconbitmap('./guiresources/icon.ico')
-# m_method.geometry('350x350+500+200')
-
-# msg_method = "\nPilih metode yang Anda inginkan\n"
-# m_method.message = Message(m_method, text=msg_method,font=("Montserrat",12))
-# m_method.message.pack()
-
-# euc_button = Button(m_method, command=m_method.destroy)
-# img3 = PhotoImage(file="./guiresources/euc.png")
-# euc_button.config(image=img3)
-# euc_button.pack()
-
-# cos_button = Button(m_method, command=m_method.destroy)
-# img4 = PhotoImage(file="./guiresources/cos.png")
-# cos_button.config(image=img4)
-# cos_button.pack()
-
-# m_method.mainloop()
