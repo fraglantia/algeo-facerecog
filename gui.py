@@ -37,8 +37,8 @@ m_menu.geometry('350x350+350+200')
 m_menu.resizable(0,0)
 # m_menu.overrideredirect(1)
 
-main_msg = "\nMatch your photos in\nM U K A K U K A M U\nYou can pick your photo OR we can choose it for you!\n" 
-m_message = Message(m_menu, text=main_msg, font=("Montserrat",12), anchor=CENTER)
+main_msg = "\nMatch your photos in\nM U K A K U K A M U\nYou can pick your photo or we can choose it for you!\n" 
+m_message = Message(m_menu, text=main_msg, font=("Montserrat",12), anchor=CENTER, justify=CENTER)
 m_message.pack()
 
 threshold = 0
