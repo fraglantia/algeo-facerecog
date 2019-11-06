@@ -74,16 +74,16 @@ def menu():
     panel = Label(m_menu, image = img)
 
     backimg = PhotoImage(file='./guiresources/m_back.png')
-    Label(m_menu, image=backimg).place(x=0,y=0)
+    Label(m_menu, image=backimg).pack()
 
     #choose image
-    c_img = Button(m_menu, command=lambda:choose_img_option(True), border=0, bg='#f3ede8') 
+    c_img = Button(m_menu, command=lambda:choose_img_option(True), border=0,bg='#e5e0d9') 
     img1 = PhotoImage(file = "./guiresources/opt1.png") #file path disesuaikan
     c_img.config(image=img1)
     c_img.place(x=70, y=150)
 
     #randomize
-    r_img = Button(m_menu, command=lambda:choose_img_option(False), border=0, bg='#f3ede8')
+    r_img = Button(m_menu, command=lambda:choose_img_option(False), border=0,bg='#e5e0d9')
     img2 = PhotoImage(file = "./guiresources/opt2.png") #file path disesuaikan
     r_img.config(image=img2)
     r_img.place(x=70, y=220)
@@ -113,26 +113,23 @@ def method():
     m_method.title('M U K A K U K A M U')
 
     mth_bg = PhotoImage(file='./guiresources/m_choosemethod.png')
+    Label(m_method, image=mth_bg).pack()
 
-    Label(m_method, image=mth_bg).place(x=0,y=0)
     v=IntVar()
     v.set(1)
 
-    Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, pady=10, font=("Montserrat 8 bold"), bg='#ffffff').place(y = 100)
-    Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10), bg='#ffffff').place(y = 130)
-    Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10), bg='#ffffff').place(y = 150)
+    Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10),bg='#e5e0d9').place(y = 130)
+    Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10),bg='#e5e0d9').place(y = 150)
     m_method.wm_iconbitmap('./guiresources/icon.ico')
     m_method.resizable(0,0)
-    # m_method.overrideredirect(1)
 
     def_thres = StringVar(m_method)
     def_thres.set('10')
 
-    Label(m_method, text="""Tentukan nilai threshold yang Anda inginkan:""",justify = LEFT, padx = 20, pady=10, font=("Montserrat 8 bold"), bg='#ffffff').place(y = 180)
     t_value = Spinbox(m_method, from_=1 ,to=20,textvariable=def_thres)
     t_value.place(x=60, y = 220)
 
-    ok = Button(m_method, command=lambda:next(), border=0, bg='#ffffff')
+    ok = Button(m_method, command=lambda:next(), border=0 ,bg='#e5e0d9')
     img3 = PhotoImage(file='./guiresources/ok.png')
     ok.config(image=img3)
     ok.place(x=70, y= 260)
@@ -193,52 +190,60 @@ def img():
         m_img.destroy()
 
     m_img = Tk()
-    m_img.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
+    m_img.title('M U K A K U K A M U')
     m_img.geometry('800x450+200+150')
-    m_img.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
+    m_img.wm_iconbitmap('./guiresources/icon.ico')
     m_img.resizable(0,0)
-    # m_img.overrideredirect(1)
 
-    personname1 = fn.split('/')[3].split('\\')[0]
-    l_name1 = Label(m_img, text=personname1, font=("Montserrat", 8))
-    l_name1.place(x=150, y=35)
+    match_bg = PhotoImage(file='./guiresources/matchpage.png')
+    Label(m_img, image=match_bg).pack()
 
-    canvas1 = Canvas(m_img, width = 300, height = 300)
+    canvas1 = Canvas(m_img, width = 300, height = 300,bd=0, highlightthickness=0,bg='#e5e0d9')
     canvas1.place(x=50,y=50)
     img1 = ImageTk.PhotoImage(Image.open(fn))
     imgArea2 = canvas1.create_image(20,20, anchor=NW, image=img1)
 
-    personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0]
-    l_name2 = Label(m_img, text=personname2, font=("Montserrat", 8))
-    l_name2.place(x=500, y=30)
+    personname1 = fn.split('/')[3].split('\\')[0]
+    l_name1 = Label(m_img, text=personname1, font=("Montserrat", 10),bg='#e5e0d9')
+    l_name1.place(x=150, y=35)
 
-    canvas2 = Canvas(m_img, width = 300, height = 300)
+    canvas2 = Canvas(m_img, width = 300, height = 300,bd=0, highlightthickness=0,bg='#e5e0d9')
     canvas2.place(x=400,y=50)
     img2 = ImageTk.PhotoImage(Image.open(refpath+matches[counter][0]))
     imgArea2 = canvas2.create_image(20,20, anchor=NW, image=img2)      
 
-    bt1 = Button(m_img, text=">>", command=lambda:changeimg(matches, pos=True), state=NORMAL)
-    bt2 = Button(m_img, text="<<", command=lambda:changeimg(matches, pos=False), state=DISABLED)
-    bt1.place(x=400,y=370)
-    bt2.place(x=350,y=370)
+    personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0]
+    l_name2 = Label(m_img, text=personname2, font=("Montserrat", 10),bg='#e5e0d9')
+    l_name2.place(x=500, y=35)
+
+    bt1 = Button(m_img, command=lambda:changeimg(matches, pos=True), state=NORMAL,bg='#e5e0d9',bd=0)
+    bt2 = Button(m_img, command=lambda:changeimg(matches, pos=False), state=DISABLED,bg='#e5e0d9',bd=0)
+    
+    imgbt1 = PhotoImage(file='./guiresources/nextbtn.png')
+    bt1.config(image=imgbt1)
+    imgbt2 = PhotoImage(file='./guiresources/prevbtn.png')
+    bt2.config(image=imgbt2)
+    
+    bt1.place(x=590,y=370)
+    bt2.place(x=500,y=370)
 
     if counter == maximg-1:
         bt1.configure(state=DISABLED)
     if counter == 0:
         bt2.configure(state=DISABLED)
 
-    l_count = Label(m_img, text="1", font=("Montserrat", 11))
-    l_count.place(x=380,y=370)
+    l_count = Label(m_img, text="1", font=("Montserrat", 11),bg='#e5e0d9')
+    l_count.place(x=560,y=370)
 
-    backhome = Button(m_img,text="Back To Home", command=lambda:ret2home(), border=0)
+    backhome = Button(m_img, command=lambda:ret2home(), border=0,bg='#e5e0d9')
     img5 = PhotoImage(file='./guiresources/reset.png')
     backhome.config(image=img5)    
-    backhome.place(x=280,y=410)
+    backhome.place(x=40,y=400)
 
-    exitbtn = Button(m_img, command=lambda:exit(), border=0)
+    exitbtn = Button(m_img, command=lambda:exit(), border=0,bg='#e5e0d9')
     img4 = PhotoImage(file='./guiresources/exit.png')
     exitbtn.config(image=img4)
-    exitbtn.place(x=400,y=410)
+    exitbtn.place(x=660,y=400)
 
     m_img.mainloop()
 
