@@ -32,6 +32,9 @@ def menu():
     global fn
     global m_open
     global m_menu
+    global is_continue
+
+    is_continue = False
 
     def chooserandom():
         images_path = testpath
@@ -44,16 +47,18 @@ def menu():
 
     def chooseimg():
         fn = filedialog.askopenfilename(initialdir = "./resources/TEST",title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
-        return fn
+        return './' + fn[fn.find('resources'):] #relpath
 
     def choose_img_option(choose=True):
         global fn
+        global is_continue
         if(choose):
             fn = chooseimg()
             if(fn == ''):
                 return
         else:
             fn = chooserandom()
+        is_continue = True
         m_menu.destroy()
 
     # untuk menu utama : random atau pilih foto
@@ -62,7 +67,7 @@ def menu():
     m_menu.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
     m_menu.geometry('350x350+500+200')
     m_menu.resizable(0,0)
-    m_menu.overrideredirect(1)
+    # m_menu.overrideredirect(1)
 
     logo_path = './guiresources/title_logo.png' #path diseuaikan
     img = PhotoImage(file=logo_path)
@@ -93,12 +98,22 @@ def method():
     global v
     global matches
     global maximg
+    global is_continue
+
+    is_continue = False
+
+    def next():
+        global is_continue
+        is_continue = True
+        m_method.destroy()
 
     # cos/euc dan threshold
     m_method = Tk()
     m_method.geometry('350x350+500+200')
     m_method.title('M U K A K U K A M U')
+
     mth_bg = PhotoImage(file='./guiresources/m_choosemethod.png')
+
     Label(m_method, image=mth_bg).place(x=0,y=0)
     v=IntVar()
     v.set(1)
@@ -108,7 +123,7 @@ def method():
     Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10), bg='#ffffff').place(y = 150)
     m_method.wm_iconbitmap('./guiresources/icon.ico')
     m_method.resizable(0,0)
-    m_method.overrideredirect(1)
+    # m_method.overrideredirect(1)
 
     def_thres = StringVar(m_method)
     def_thres.set('10')
@@ -117,7 +132,7 @@ def method():
     t_value = Spinbox(m_method, from_=1 ,to=20,textvariable=def_thres)
     t_value.place(x=60, y = 220)
 
-    ok = Button(m_method, command=lambda:m_method.destroy(), border=0, bg='#ffffff')
+    ok = Button(m_method, command=lambda:next(), border=0, bg='#ffffff')
     img3 = PhotoImage(file='./guiresources/ok.png')
     ok.config(image=img3)
     ok.place(x=70, y= 260)
@@ -138,6 +153,9 @@ def img():
     global counter
     global fn
     global v
+    global is_continue
+
+    is_continue = False
 
     def changeimg(matches, pos=True):
         global maximg
@@ -166,6 +184,7 @@ def img():
     def ret2home():
         global reset
         reset = True
+        is_continue = True
         m_img.destroy()
 
     def exit():
@@ -178,7 +197,7 @@ def img():
     m_img.geometry('800x450+200+150')
     m_img.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
     m_img.resizable(0,0)
-    m_img.overrideredirect(1)
+    # m_img.overrideredirect(1)
 
     personname1 = fn.split('/')[3].split('\\')[0]
     l_name1 = Label(m_img, text=personname1, font=("Montserrat", 8))
@@ -229,13 +248,17 @@ testpath = './resources/TEST/'
 
 db = load_database() #load db data
 reset = True
+is_continue = True
 open()
 
-while reset:
+while reset and is_continue:
     matches = []
     counter = 0
     fn = ''
 
-    menu()
-    method()
-    img()
+    if(is_continue):
+        menu()
+    if(is_continue):
+        method()
+    if(is_continue):
+        img()
