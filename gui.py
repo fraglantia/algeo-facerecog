@@ -88,8 +88,11 @@ m_menu.mainloop()
 
 # print(v.get())
 # print(fn)
+
+# cos/euc dan threshold
 m_method = Tk()
 m_method.geometry('350x350+350+200')
+m_method.title('M U K A K U K A M U')
 Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, font=("Montserrat",10)).pack()
 Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",8)).pack(anchor=W)
 Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",8)).pack(anchor=W)
