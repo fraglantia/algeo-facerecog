@@ -7,6 +7,10 @@ import os
 import cv2
 from coba import *
 
+refpath = './resources/REF/'
+testpath = './resources/TEST/'
+
+
 # ditambahin di run dulu ya gui nya --fu
 # untuk opening 'aplikasi' ala2 microsoft word
 m_open = Tk()
@@ -56,7 +60,7 @@ def choose_img_option(choose=True):
     m_menu.destroy()
 
 def chooserandom():
-    images_path = 'resources/PINS/'
+    images_path = testpath
     files = []
     folders = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
     for subfolder in folders:
@@ -106,11 +110,16 @@ ok.pack(anchor=CENTER)
 
 m_method.mainloop()
 
-matches = matching(fn, db, top=20, cosine=(v.get()==2))
+maximg = int(def_thres.get())
+
+matches = matching(fn, db, top=maximg, cosine=(v.get()==2))
 counter = 0
 
+
 def changeimg(matches, pos=True):
+    global maximg
     global counter
+    # print 
     bt1.configure(state=NORMAL)
     bt2.configure(state=NORMAL)
     if pos:
@@ -119,35 +128,55 @@ def changeimg(matches, pos=True):
         counter -= 1
 
     # maxnya ganti ntar
-    if counter == 10:
+    if counter == maximg-1:
         bt1.configure(state=DISABLED)
     if counter == 0:
         bt2.configure(state=DISABLED)
 
-    img2 = ImageTk.PhotoImage(Image.open('resources/PINS/'+matches[counter][0]))
+    img2 = ImageTk.PhotoImage(Image.open(refpath+matches[counter][0]))
     canvas2.itemconfig(imgArea2, image=img2)
     canvas2.image = img2
+    l_count.configure(text=str(counter+1))
+    personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0]
+    l_name2.configure(text=personname2)
 
 
 m_img = Tk()
 m_img.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
-m_img.geometry('700x400')
+m_img.geometry('1000x400')
 m_img.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
 m_img.resizable(0,0)
+
+personname1 = fn.split('/')[3].split('\\')[0]
+l_name1 = Label(m_img, text=personname1, font=("Montserrat", 8))
+l_name1.pack(side=LEFT)
 
 canvas1 = Canvas(m_img, width = 300, height = 300)
 canvas1.pack(side=LEFT)
 img1 = ImageTk.PhotoImage(Image.open(fn))
-imgArea2 = canvas1.create_image(20,20, anchor=NW, image=img1)    
+imgArea2 = canvas1.create_image(20,20, anchor=NW, image=img1)
+
+
+personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0]
+l_name2 = Label(m_img, text=personname2, font=("Montserrat", 8))
+l_name2.pack(side=LEFT)
 
 canvas2 = Canvas(m_img, width = 300, height = 300)
 canvas2.pack(side=LEFT)
-img2 = ImageTk.PhotoImage(Image.open('resources/PINS/'+matches[counter][0]))
+img2 = ImageTk.PhotoImage(Image.open(refpath+matches[counter][0]))
 imgArea2 = canvas2.create_image(20,20, anchor=NW, image=img2)      
 
 bt1 = Button(m_img, text=">>", command=lambda:changeimg(matches, pos=True), state=NORMAL)
-bt1.pack(side=BOTTOM)
 bt2 = Button(m_img, text="<<", command=lambda:changeimg(matches, pos=False), state=DISABLED)
+if counter == maximg-1:
+    bt1.configure(state=DISABLED)
+if counter == 0:
+    bt2.configure(state=DISABLED)
+
+l_count = Label(m_img, text="1", font=("Montserrat", 11))
+l_count.pack(side=BOTTOM)
+
+bt1.pack(side=BOTTOM)
 bt2.pack(side=BOTTOM)
 
 m_img.mainloop()

@@ -1,4 +1,4 @@
 # database
 /features.pck
 /resources
-/__pycache__
+/__pycache__/*
