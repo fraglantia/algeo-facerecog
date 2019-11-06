@@ -76,7 +76,7 @@ def chooseimg():
 random1 = Button(m_menu, command=lambda:choose_img_option(True), border=0) 
 img1 = PhotoImage(file = "./guiresources/opt1.png") #file path disesuaikan
 random1.config(image=img1)
-random1.pack()
+random1.pack(padx=10,pady=10)
 
 #randomize
 random2 = Button(m_menu, command=lambda:choose_img_option(False), border=0)
