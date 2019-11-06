@@ -111,6 +111,9 @@ img3 = PhotoImage(file='./guiresources/ok.png')
 ok.config(image=img3)
 ok.pack(anchor=CENTER)
 
+backhome = Button(m_method,text="Back To Home")
+backhome.pack(side = BOTTOM)
+
 m_method.mainloop()
 
 maximg = int(def_thres.get())
