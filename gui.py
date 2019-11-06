@@ -14,7 +14,7 @@ def open():
     # untuk opening 'aplikasi' ala2 microsoft word
     m_open = Tk()
     m_open.overrideredirect(1) #menghapus frame windows
-    m_open.geometry('350x350+350+200')
+    m_open.geometry('350x350+500+200')
     logo_path = './guiresources/title_logo.png' #path diseuaikan
     img = PhotoImage(file=logo_path)
     panel = Label(m_open, image = img)
@@ -60,7 +60,7 @@ def menu():
     m_menu = Tk()
     m_menu.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
     m_menu.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
-    m_menu.geometry('350x350+350+200')
+    m_menu.geometry('350x350+500+200')
     m_menu.resizable(0,0)
     m_menu.overrideredirect(1)
 
@@ -96,7 +96,7 @@ def method():
 
     # cos/euc dan threshold
     m_method = Tk()
-    m_method.geometry('350x350+350+200')
+    m_method.geometry('350x350+500+200')
     m_method.title('M U K A K U K A M U')
 
     v=IntVar()
@@ -173,7 +173,7 @@ def img():
 
     m_img = Tk()
     m_img.title('M U K A K U K A M U') #engga keliatan krn frame windowsnya dihapus wkwk
-    m_img.geometry('800x450')
+    m_img.geometry('800x450+200+150')
     m_img.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
     m_img.resizable(0,0)
 
@@ -208,10 +208,14 @@ def img():
     l_count = Label(m_img, text="1", font=("Montserrat", 11))
     l_count.place(x=380,y=370)
 
-    backhome = Button(m_img,text="Back To Home", command=lambda:ret2home())
-    backhome.place(x=300,y=410)
+    backhome = Button(m_img,text="Back To Home", command=lambda:ret2home(), border=0)
+    img5 = PhotoImage(file='./guiresources/reset.png')
+    backhome.config(image=img5)    
+    backhome.place(x=280,y=410)
 
-    exitbtn = Button(m_img,text="Exit", command=lambda:exit())
+    exitbtn = Button(m_img, command=lambda:exit(), border=0)
+    img4 = PhotoImage(file='./guiresources/exit.png')
+    exitbtn.config(image=img4)
     exitbtn.place(x=400,y=410)
 
     m_img.mainloop()
