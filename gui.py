@@ -93,7 +93,7 @@ m_menu.mainloop()
 m_method = Tk()
 m_method.geometry('350x350+350+200')
 m_method.title('M U K A K U K A M U')
-Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, font=("Montserrat 12 bold")).pack()
+Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, pady=10, font=("Montserrat 12 bold")).pack()
 Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10)).pack(anchor=CENTER)
 Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10)).pack(anchor=CENTER)
 m_method.wm_iconbitmap('./guiresources/icon.ico')
@@ -102,17 +102,18 @@ m_method.resizable(0,0)
 def_thres = StringVar(m_method)
 def_thres.set('10')
 
-Label(m_method, text="""Tentukan nilai threshold yang Anda inginkan:""",justify = LEFT, padx = 20, font=("Montserrat 12 bold")).pack()
+Label(m_method, text="""Tentukan nilai threshold yang Anda inginkan:""",justify = LEFT, padx = 20, pady=10, font=("Montserrat 12 bold")).pack()
 t_value = Spinbox(m_method, from_=1 ,to=20,textvariable=def_thres)
 t_value.pack()
 
 ok = Button(m_method, font=('Montserrat',12), command=lambda:[get_t_value() ,m_method.destroy()], border=0)
 img3 = PhotoImage(file='./guiresources/ok.png')
 ok.config(image=img3)
-ok.pack(anchor=CENTER)
+ok.pack(anchor=CENTER,padx=10, pady=20)
+
 
 backhome = Button(m_method,text="Back To Home")
-backhome.pack(side = BOTTOM)
+backhome.pack(side = BOTTOM, padx = 20, pady=10)
 
 m_method.mainloop()
 
