@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 import random
 import os
 import cv2
-from coba import *
+from matcher import *
 
 def open():
     global m_open
@@ -24,7 +24,7 @@ def open():
     m_open.message = Message(m_open, text=open_text, font=("Montserrat",20), width=350)
     m_open.message.pack()
 
-    m_open.after(500, m_open.destroy) #tampil sebentar
+    m_open.after(800, m_open.destroy) #tampil sebentar
     m_open.mainloop()
 
 def menu():
@@ -43,7 +43,7 @@ def menu():
         return sample[0]
 
     def chooseimg():
-        fn = filedialog.askopenfilename(initialdir = "./resources",title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        fn = filedialog.askopenfilename(initialdir = "./resources/TEST",title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
         return fn
 
     def choose_img_option(choose=True):
@@ -98,27 +98,29 @@ def method():
     m_method = Tk()
     m_method.geometry('350x350+500+200')
     m_method.title('M U K A K U K A M U')
-
+    mth_bg = PhotoImage(file='./guiresources/m_choosemethod.png')
+    Label(m_method, image=mth_bg).place(x=0,y=0)
     v=IntVar()
     v.set(1)
 
-    Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, pady=10, font=("Montserrat 12 bold")).pack()
-    Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10)).pack(anchor=CENTER)
-    Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10)).pack(anchor=CENTER)
+    Label(m_method, text="""Pilih metode yang Anda inginkan:""", justify = LEFT, padx = 20, pady=10, font=("Montserrat 8 bold"), bg='#ffffff').place(y = 100)
+    Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10), bg='#ffffff').place(y = 130)
+    Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10), bg='#ffffff').place(y = 150)
     m_method.wm_iconbitmap('./guiresources/icon.ico')
     m_method.resizable(0,0)
+    m_method.overrideredirect(1)
 
     def_thres = StringVar(m_method)
     def_thres.set('10')
 
-    Label(m_method, text="""Tentukan nilai threshold yang Anda inginkan:""",justify = LEFT, padx = 20, pady=10, font=("Montserrat 12 bold")).pack()
+    Label(m_method, text="""Tentukan nilai threshold yang Anda inginkan:""",justify = LEFT, padx = 20, pady=10, font=("Montserrat 8 bold"), bg='#ffffff').place(y = 180)
     t_value = Spinbox(m_method, from_=1 ,to=20,textvariable=def_thres)
-    t_value.pack()
+    t_value.place(x=60, y = 220)
 
-    ok = Button(m_method, command=lambda:m_method.destroy(), border=0)
+    ok = Button(m_method, command=lambda:m_method.destroy(), border=0, bg='#ffffff')
     img3 = PhotoImage(file='./guiresources/ok.png')
     ok.config(image=img3)
-    ok.pack(anchor=CENTER,padx=10, pady=20)
+    ok.place(x=70, y= 260)
 
     m_method.mainloop()
 
@@ -176,6 +178,7 @@ def img():
     m_img.geometry('800x450+200+150')
     m_img.wm_iconbitmap('./guiresources/icon.ico') #engga keliatan krn frame windowsnya dihapus wkwk
     m_img.resizable(0,0)
+    m_img.overrideredirect(1)
 
     personname1 = fn.split('/')[3].split('\\')[0]
     l_name1 = Label(m_img, text=personname1, font=("Montserrat", 8))
