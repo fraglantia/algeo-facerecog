@@ -182,7 +182,12 @@ if counter == 0:
 l_count = Label(m_img, text="1", font=("Montserrat", 11))
 l_count.pack(side=BOTTOM)
 
+backhome = Button(m_img,text="Back To Home")
+backhome.pack(side = BOTTOM)
+
 bt1.pack(side=BOTTOM)
 bt2.pack(side=BOTTOM)
+
+
 
 m_img.mainloop()
