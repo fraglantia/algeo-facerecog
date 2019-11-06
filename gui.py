@@ -180,6 +180,7 @@ def img():
 
     def ret2home():
         global reset
+        global is_continue
         reset = True
         is_continue = True
         m_img.destroy()
@@ -256,7 +257,7 @@ reset = True
 is_continue = True
 open()
 
-while reset and is_continue:
+while reset:
     matches = []
     counter = 0
     fn = ''
