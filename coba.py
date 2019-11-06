@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 import scipy
-from scipy.misc import imread
+from matplotlib.pyplot import imread
+# from scipy.misc import imread
 from tkinter import *
 from PIL import ImageTk, Image
 import pickle
