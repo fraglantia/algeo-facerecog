@@ -161,6 +161,7 @@ def img():
         else:
             counter -= 1
 
+        # maxnya ganti ntar
         if counter == maximg-1:
             bt1.configure(state=DISABLED)
         if counter == 0:
@@ -216,21 +217,19 @@ def img():
     l_name2 = Label(m_img, text=personname2, font=("Montserrat", 10),bg='#e5e0d9')
     l_name2.place(x=500, y=35)
 
-<<<<<<< HEAD
+    # button prev dan next
+    bt1 = Button(m_img, command=lambda:changeimg(matches, pos=True), state=NORMAL,bg='#e5e0d9',bd=0)
+    bt2 = Button(m_img, command=lambda:changeimg(matches, pos=False), state=DISABLED,bg='#e5e0d9',bd=0)
+
+    # keyboard
     def keypress(e):
         if(e.keycode==39 and counter != maximg-1):
             changeimg(matches, pos=True)
         if(e.keycode==37 and counter != 0):
             changeimg(matches, pos=False)
 
-
-=======
-    # button prev dan next
->>>>>>> d14f18ea02fab6615430e49905450bddc6c9da96
-    bt1 = Button(m_img, command=lambda:changeimg(matches, pos=True), state=NORMAL,bg='#e5e0d9',bd=0)
-    bt2 = Button(m_img, command=lambda:changeimg(matches, pos=False), state=DISABLED,bg='#e5e0d9',bd=0)
     m_img.bind('<KeyPress>', keypress)
-    
+
     imgbt1 = PhotoImage(file='./guiresources/nextbtn.png')
     bt1.config(image=imgbt1)
     imgbt2 = PhotoImage(file='./guiresources/prevbtn.png')
