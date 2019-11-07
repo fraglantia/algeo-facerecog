@@ -75,13 +75,13 @@ def menu():
     backimg = PhotoImage(file='./guiresources/m_back.png')
     Label(m_menu, image=backimg).pack()
 
-    #button : choose image
+    #button : pilih foto
     c_img = Button(m_menu, command=lambda:choose_img_option(True), border=0,bg='#e5e0d9') 
     img1 = PhotoImage(file = "./guiresources/opt1.png") #file path disesuaikan
     c_img.config(image=img1)
     c_img.place(x=70, y=150)
 
-    #button : randomize
+    #button : random
     r_img = Button(m_menu, command=lambda:choose_img_option(False), border=0,bg='#e5e0d9')
     img2 = PhotoImage(file = "./guiresources/opt2.png") #file path disesuaikan
     r_img.config(image=img2)
