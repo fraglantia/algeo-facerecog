@@ -114,8 +114,8 @@ def method():
     v=IntVar()
     v.set(1)
 
-    Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10),bg='#e5e0d9').place(y = 130)
-    Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, font=("Montserrat",10),bg='#e5e0d9').place(y = 150)
+    Radiobutton(m_method, text="Euclidean Distance", padx = 50, variable=v, value=1, font=("Montserrat",10),bg='#e5e0d9').place(x=50,y = 130)
+    Radiobutton(m_method, text="Cosine Similarity", padx = 50, variable=v, value=2, anchor = CENTER,font=("Montserrat",10),bg='#e5e0d9').place(x=50,y = 150)
     m_method.wm_iconbitmap('./guiresources/icon.ico')
     m_method.resizable(0,0)
 
@@ -123,12 +123,12 @@ def method():
     def_thres.set('10')
 
     t_value = Spinbox(m_method, from_=1 ,to=20,textvariable=def_thres)
-    t_value.place(x=60, y = 220)
+    t_value.place(x=105, y = 225)
 
     ok = Button(m_method, command=lambda:next(), border=0 ,bg='#e5e0d9')
     img3 = PhotoImage(file='./guiresources/ok.png')
     ok.config(image=img3)
-    ok.place(x=70, y= 260)
+    ok.place(x=70, y= 265)
 
     m_method.mainloop()
 
