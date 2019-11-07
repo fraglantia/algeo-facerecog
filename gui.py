@@ -161,7 +161,7 @@ def img():
         else:
             counter -= 1
 
-        # maxnya ganti ntar
+        # maxnya nanti ganti 
         if counter == maximg-1:
             bt1.configure(state=DISABLED)
         if counter == 0:
