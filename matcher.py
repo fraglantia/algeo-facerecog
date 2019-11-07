@@ -1,3 +1,11 @@
+'''
+MUKAKUKAMU
+matcher.py
+Steve Bezalel Iman Gustaman     13518018
+Hengky Surya Angkasa            13518048
+William Fu                      13518055
+'''
+
 import cv2
 import numpy as np
 import scipy
