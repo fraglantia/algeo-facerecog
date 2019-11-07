@@ -47,7 +47,10 @@ def menu():
 
     def chooseimg():
         fn = filedialog.askopenfilename(initialdir = "./resources/TEST",title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
-        return './' + fn[fn.find('resources'):] #relpath
+        if(fn[-4:] == '.jpg'):
+            return './' + fn[fn.find('resources'):] #relpath
+        else:
+            return ''
 
     def choose_img_option(choose=True):
         global fn
