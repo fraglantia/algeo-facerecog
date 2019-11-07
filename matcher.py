@@ -50,15 +50,6 @@ def batch_extractor(images_path, pickled_db_path="features.pck"):
     with open(pickled_db_path, 'wb') as fp:
         pickle.dump(result, fp)
 
-def show_img(path):
-    img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
-    img = img[0:300, 0:300]
-    cv2.imshow(path,img)
-    cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-    # plt.imshow(img)
-    # plt.show()
-
 def cosdist(v1, v2):
     dotpro = np.sum(np.multiply(v1,v2))
 
@@ -100,11 +91,6 @@ def matching(imgpath, db, cosine=True, top=5):
         tuplearr.append((k,dist))
 
     return sorted(tuplearr, key=lambda x: x[1])[:top]
-
-
-def pic_name(path):
-    return path.split('\\')[0].split('/')[-1][5:]
-
 
 # UNCOMMENT kalo mau buat db baru
 # batch_extractor('resources/REF/')
