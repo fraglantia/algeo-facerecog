@@ -171,7 +171,7 @@ def img():
         canvas2.itemconfig(imgArea2, image=img2)
         canvas2.image = img2
         l_count.configure(text=str(counter+1))
-        personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0]
+        personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0].title()
         l_name2.configure(text=personname2)
 
     def ret2home():
@@ -203,7 +203,7 @@ def img():
     img1 = ImageTk.PhotoImage(Image.open(fn))
     imgArea2 = canvas1.create_image(20,20, anchor=NW, image=img1)
 
-    personname1 = fn.split('/')[3].split('\\')[0]
+    personname1 = fn.split('/')[3].split('\\')[0].title()
     l_name1 = Label(m_img, text=personname1, font=("Montserrat", 10),bg='#e5e0d9')
     l_name1.place(x=150, y=35)
 
@@ -213,9 +213,10 @@ def img():
     img2 = ImageTk.PhotoImage(Image.open(refpath+matches[counter][0]))
     imgArea2 = canvas2.create_image(20,20, anchor=NW, image=img2)      
 
-    personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0]
+    personname2 = (refpath+matches[counter][0]).split('/')[3].split('\\')[0].title()
     l_name2 = Label(m_img, text=personname2, font=("Montserrat", 10),bg='#e5e0d9')
     l_name2.place(x=500, y=35)
+
 
     # button prev dan next
     bt1 = Button(m_img, command=lambda:changeimg(matches, pos=True), state=NORMAL,bg='#e5e0d9',bd=0)
@@ -244,7 +245,7 @@ def img():
         bt2.configure(state=DISABLED)
 
     # menunjukkan foto ke berapa
-    l_count = Label(m_img, text="1", font=("Montserrat", 11),bg='#e5e0d9')
+    l_count = Label(m_img, text="1", font=("Montserrat", 11),bg='#e5e0d9', justify=CENTER)
     l_count.place(x=555,y=370)
 
     # kembali ke menu awal
