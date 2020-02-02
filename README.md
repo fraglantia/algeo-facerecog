@@ -1,2 +1,2 @@
 # algeo-facerecog
-tubes algeo uwu
+simple face recognition app using python and opencv
